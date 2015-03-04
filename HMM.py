@@ -63,47 +63,6 @@ class HMM:
         header = [" "]+[sequence[i] for i in xrange(1,len(sequence)+1)]
         print HMM_utils.matrix_to_string(table,header)
 
-    def test(self):
-        test_seq=Sequence(['killer','crazy','clown','problem'],["X"]*4)
-        emission = [[0,0,0,1],[0.4,0.3,0.3,0]] 
-        pi = [0.25,0.75]
-        trans = [[0.0,1.0],[0.5,0.5]]
-        states = ('A','N')
-        vocab= ['clown','killer','problem','crazy']
-        params = HMM_params(None,states,pi,trans,emission, vocab)
-        print self.viterbi(test_seq,params)
- 
-################## Supervised Training 
-
-    def test2(self):
-        seq1 = Sequence(['killer','clown'],['N','N'])
-        seq2 = Sequence(['killer','problem'],['N','N'])
-        seq3 = Sequence(['crazy','problem'],['A','N'])
-        seq4 = Sequence(['crazy','clown'],['A','N'])
-        seq5 = Sequence(['problem','crazy','clown'],['N','A','N'])
-        seq6 = Sequence(['clown','crazy','killer'],['N','A','N'])
-        train_set = [seq1,seq2,seq3,seq4,seq5,seq6]
-
-        emission = [[0,0,0,1],[0.4,0.3,0.3,0]]
-        pi = [0.25,0.75]
-        trans = [[0.0,1.0],[0.5,0.5]]
-
-        #init_for_unsupervised
-        emission = [[0.2,0.3,0.2,0.3],[0.2,0.2,0.3,0.3]]
-        pi = [0.49,0.51]
-        trans = [[0.49,0.51],[0.51,0.49]]  
-
-        states = ('A','N')
-        vocab= ['clown','killer','problem','crazy']
-        params = HMM_params(None,states,pi,trans,emission, vocab)
-        #print self.f_i(params,train_set)
-        #print self.f_i_j(params,train_set)
-        #print self.f_i_o(params, train_set)
-        self.supervised_train(params,train_set)
-        #self.unsupervised_train(params,train_set)
-        test_seq=Sequence(['killer','crazy','clown','problem'],["X"]*4)
-        print self.viterbi(test_seq,params)
-
     def supervised_train(self, params,train_set):
         params.re_init(self.f_i(params,train_set), self.f_i_j(params,train_set), self.f_i_o(params, train_set))
 
@@ -288,7 +247,3 @@ class HMM:
 
     def smooth_counts():
         print "TODO"
- 
-if __name__=='__main__':
-    unit = HMM()
-    unit.test2()
