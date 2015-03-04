@@ -57,7 +57,7 @@ class HMM:
         seq = self._follow_backpointers(param, DP_table, backs)
         self.print_DP_table(sequence, DP_table)
 
-        return seq
+        return seq , DP_table
 
     def print_DP_table(self,sequence, table):
         header = [" "]+[sequence[i] for i in xrange(1,len(sequence)+1)]
@@ -99,20 +99,20 @@ class HMM:
         #print self.f_i(params,train_set)
         #print self.f_i_j(params,train_set)
         #print self.f_i_o(params, train_set)
-        #self.supervised_train(params,train_set)
-        self.unsupervised_train(params,train_set)
+        self.supervised_train(params,train_set)
+        #self.unsupervised_train(params,train_set)
         test_seq=Sequence(['killer','crazy','clown','problem'],["X"]*4)
         print self.viterbi(test_seq,params)
 
     def supervised_train(self, params,train_set):
         params.re_init(self.f_i(params,train_set), self.f_i_j(params,train_set), self.f_i_o(params, train_set))
 
-    def unsupervised_train(self,params, train_set):
+    def unsupervised_train(self,params, train_set, number_of_iter):
         """
          based on EM
         """
-        # TODO iteration
-        for i in xrange(3): 
+        # TODO not overwriting params
+        for i in xrange(number_of_iter): 
             params.re_init(self.g_i(params,train_set), self.g_i_j(params,train_set), self.g_i_o(params, train_set)) 
 
 
@@ -291,5 +291,4 @@ class HMM:
  
 if __name__=='__main__':
     unit = HMM()
-    print "here"
     unit.test2()
