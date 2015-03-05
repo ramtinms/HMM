@@ -2,7 +2,7 @@
 This package provide HMM functionality like Viterbi, Forward-backward, Supervised learning params, Unsupervised learning params (EM)
 
 You load parameters from a file with this format :
-'''
+```
 states (comma seperated)
 \n
 Pi Probabilities (comma seperated)
@@ -17,7 +17,7 @@ emission probability for state 1 (comma seperated)
 emission probability for state 2 (comma seperated)
 ...
 emission probability for state N (comma seperated)
-'''
+```
 
 for example see test.param
 
