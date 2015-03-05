@@ -1,6 +1,8 @@
 # HMM
 This package provide HMM functionality like Viterbi, Forward-backward, Supervised learning params, Unsupervised learning params (EM)
 
+
+## Parameters setting
 You load parameters from a file with this format :
 ```
 states (comma seperated)
@@ -21,3 +23,10 @@ emission probability for state N (comma seperated)
 
 for example see test.param
 
+## Files
+`sequence` stores a sequence of `observations`.
+
+
+
+## Unit test
+For testing functionality run `python test.py`
