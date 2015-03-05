@@ -19,18 +19,19 @@ class HMM_params(object):
             self.pi = pi
             self.emissions = emissions
             self.vocab = vocab 
-            self.dic = {}
-            self.label_dic = {} 
-            counter=0
-            for word in vocab:
-                self.dic[word]=counter
-                counter += 1
-            counter = 0
-            for label in states:
-                self.label_dic[label]=counter
-                counter+=1
         else:
-            self.read_from_file(file) 
+            self.read_from_file(file)
+
+        self.dic = {}
+        self.label_dic = {}
+        counter=0
+        for word in self.vocab:
+            self.dic[word]=counter
+            counter += 1
+        counter = 0
+        for label in self.states:
+            self.label_dic[label]=counter
+            counter+=1 
 
     def word_to_id(self,word):
         return self.dic[word]
@@ -62,6 +63,35 @@ class HMM_params(object):
 
     # TODO read and write to file
     def read_from_file(self, file_name):
+        with open(file_name) as inp:
+            state = 0
+            self.states = []
+            self.pi = []
+            self.transitions = []
+            self.emissions = []
+            for line in inp:
+                if line != "\n":
+                    if state == 0: # Reading states
+                        self.states = line.strip().split(',') 
+                    elif state == 1: # Reading init prob
+                        #print here
+                        for item in line.strip().split(','):
+                            self.pi.append(float(item))
+                    elif state == 2: # Reading transition prob
+                        temp_list= []
+                        for item in line.strip().split(','):
+                            temp_list.append(float(item))
+                        self.transitions.append(temp_list)
+                    elif state == 3: # Reading emission prob
+                        temp_list= []
+                        for item in line.strip().split(','):
+                            temp_list.append(float(item))
+                        self.emissions.append(temp_list)
+                    elif state == 4: # Reading vocabs
+                        self.vocab = [item for item in line.strip().split(',')]
+                else: 
+                    state +=1
+
         return None
     #def write_to_file(self, file_name):
     

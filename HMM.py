@@ -1,12 +1,6 @@
-
 from sequence import Sequence
 from HMM_params import HMM_params
 import HMM_utils
-
-# seting up params 
-
-# Reading params from file
-# Reading sequence from file
 
 
 class HMM:
